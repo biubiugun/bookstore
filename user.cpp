@@ -685,6 +685,7 @@ void run_program(string &line){
             }
         }
     }else if(op == "buy"){
+        if(the_users.empty())throw("error");
         string isbn,t;
         sin >> isbn >> t;
         if(!checkisbn(isbn) || t.empty())throw ("error");
