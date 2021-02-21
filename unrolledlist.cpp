@@ -239,37 +239,37 @@ void unrolledlist::findElement(string key, vector<int> &area) {
 //        pre_offset = temp4.nxt;
 //    }
 //    in.close();
-//    int now = 0,pre = 0,next;
-//    block tmp;
-//    in.seekg(now);
-//    in.read(reinterpret_cast<char*>(&tmp),sizeof(block));
-//    next = tmp.nxt;
-//    while(next != -1){
-//        block b;
-//        in.seekg(next);
-//        in.read(reinterpret_cast<char*>(&tmp),sizeof(block));
-//        if(strcmp(b.elementarray[0].key,key.c_str()) > 0)break;
-//        in.seekg(now);
-//        in.read(reinterpret_cast<char*>(&b),sizeof(block));
-//        if(strcmp(key.c_str(),b.elementarray[0].key) > 0)pre = now;
-//        now = next;
-//        block tmp1;
-//        in.seekg(now);
-//        in.read(reinterpret_cast<char*>(&b),sizeof(block));
-//        next = tmp1.nxt;
-//    }
-//    while(true){
-//        out.seekg(pre);
-//        block s;
-//        out.read(reinterpret_cast<char*>(&s),sizeof(block));
-//        for(int i = 0;i < s.num; ++i){
-//            if(strcmp(key.c_str(),s.elementarray[i].key) == 0){
-//                area.push_back(s.elementarray[i].offset);
-//            }
-//        }
-//        if(pre == next)break;
-//        pre = s.nxt;
-//    }
-//    in.close();
-//    out.close();
+    int now = 0,pre = 0,next;
+    block tmp;
+    in.seekg(now);
+    in.read(reinterpret_cast<char*>(&tmp),sizeof(block));
+    next = tmp.nxt;
+    while(next != -1){
+        block b;
+        in.seekg(next);
+        in.read(reinterpret_cast<char*>(&tmp),sizeof(block));
+        if(strcmp(b.elementarray[0].key,key.c_str()) > 0)break;
+        in.seekg(now);
+        in.read(reinterpret_cast<char*>(&b),sizeof(block));
+        if(strcmp(key.c_str(),b.elementarray[0].key) > 0)pre = now;
+        now = next;
+        block tmp1;
+        in.seekg(now);
+        in.read(reinterpret_cast<char*>(&b),sizeof(block));
+        next = tmp1.nxt;
+    }
+    while(true){
+        out.seekg(pre);
+        block s;
+        out.read(reinterpret_cast<char*>(&s),sizeof(block));
+        for(int i = 0;i < s.num; ++i){
+            if(strcmp(key.c_str(),s.elementarray[i].key) == 0){
+                area.push_back(s.elementarray[i].offset);
+            }
+        }
+        if(pre == next)break;
+        pre = s.nxt;
+    }
+    in.close();
+    out.close();
 }
