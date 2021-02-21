@@ -331,7 +331,6 @@ void modifykeyword(const string& new_keyword){
 
 void modifyisbn(const string& new_isbn){
     if(the_users.top().priority < 3)throw("error");
-
     book tmp(read<book>(bookfile,the_users.top().select_book));
     vector<int>psb;
     isbnlist.findElement(tmp.isbn,psb);
