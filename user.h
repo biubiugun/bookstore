@@ -6,7 +6,7 @@
 #define financefile "finance.dat"
 #define billfile "bill.dat"
 #define useridfile "userid.dat"
-#define keyfile "keyfile.dat"
+#define keyfile "keyfile.txt"
 #define USER "user.dat"
 #define isbnfile "isbn.dat"
 #define namefile "name.dat"

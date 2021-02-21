@@ -441,7 +441,7 @@ void show_finance(){
     in.read(reinterpret_cast<char*>(&tmp),sizeof(finance));
     printf("%s"," + ");
     printf("%.2lf%s",tmp.benefit," ");
-    printf("%s"," - ");
+    printf("%s","- ");
     printf("%.2lf%s",tmp.cost,"\n");
 }
 
@@ -469,7 +469,7 @@ void show_finance(int times){
         }
     }
     printf("%s%.2lf%s"," + ",input," ");
-    printf("%s%.2lf\n"," - ",fabs(output));
+    printf("%s%.2lf\n","- ",fabs(output));
 }
 
 //void show(const string &key,unrolledlist &list){

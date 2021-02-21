@@ -74,6 +74,7 @@ void unrolledlist::merge(int offset1, int offset2) {
     for(int i = 0;i < s2.num; ++i){
         s1.elementarray[i + s2.num] = s2.elementarray[i];
     }
+    s1.num += s2.num;
 //    bigger.pre = s1.pre;
 //    bigger.nxt = s2.nxt;
 //    bigger.num = s1.num + s2.num;
