@@ -190,53 +190,86 @@ void unrolledlist::deleteElement(element &a) {
 void unrolledlist::findElement(string key, vector<int> &area) {
     fstream in,out;
     in.open(filename,ios::in | ios::binary);
+    out.open(filename,ios::in | ios::out | ios::binary);
+    if(!out)throw("error");
     if(!in)throw("error");
     in.seekg(0,ios::end);
     int n = in.tellg();
     if(n == 0){
-        out.open(filename,ios::in | ios::out | ios::binary);
-        if(!out)throw("error");
         block tmp;
         out.seekp(0);
         out.write(reinterpret_cast<char*>(&tmp),sizeof(block));
         out.close();
         return;
     }
-    int now,next,pre_offset = 0;
-    now = 0;
-    block temp1;
+//    int now,next,pre_offset = 0;
+//    now = 0;
+//    block temp1;
+//    in.seekg(now);
+//    in.read(reinterpret_cast<char*>(&temp1),sizeof(block));
+//    next = temp1.nxt;
+//    while(next != -1){
+//        block temp2;
+//        in.seekg(next);
+//        in.read(reinterpret_cast<char*>(&temp2),sizeof(block));
+//        if(strcmp(temp2.elementarray[0].key,key.c_str()) > 0)break;
+//        else{
+//            in.seekg(now);
+//            in.read(reinterpret_cast<char*>(&temp2),sizeof(block));
+//            if(strcmp(temp2.elementarray[0].key,key.c_str()) < 0){
+//                pre_offset = now;
+//            }
+//            now = next;
+//            block temp3;
+//            in.seekg(now);
+//            in.read(reinterpret_cast<char*>(&temp3),sizeof(block));
+//            next = temp3.nxt;
+//        }
+//    }
+//    while(true){
+//        block temp4;
+//        in.seekg(pre_offset);
+//        in.read(reinterpret_cast<char*>(&temp4),sizeof(block));
+//        for(int i = 0; i < temp4.num; ++i){
+//            if(strcmp(temp4.elementarray[i].key,key.c_str()) == 0){
+//                area.push_back(temp4.elementarray[i].offset);
+//            }
+//        }
+//        if(pre_offset == next)break;
+//        pre_offset = temp4.nxt;
+//    }
+//    in.close();
+    int now = 0,pre = 0,next;
+    block tmp;
     in.seekg(now);
-    in.read(reinterpret_cast<char*>(&temp1),sizeof(block));
-    next = temp1.nxt;
+    in.read(reinterpret_cast<char*>(&tmp),sizeof(block));
+    next = tmp.nxt;
     while(next != -1){
-        block temp2;
+        block b;
         in.seekg(next);
-        in.read(reinterpret_cast<char*>(&temp2),sizeof(block));
-        if(strcmp(temp2.elementarray[0].key,key.c_str()) > 0)break;
-        else{
-            in.seekg(now);
-            in.read(reinterpret_cast<char*>(&temp2),sizeof(block));
-            if(strcmp(temp2.elementarray[0].key,key.c_str()) < 0){
-                pre_offset = now;
-            }
-            now = next;
-            block temp3;
-            in.seekg(now);
-            in.read(reinterpret_cast<char*>(&temp3),sizeof(block));
-            next = temp3.nxt;
-        }
+        in.read(reinterpret_cast<char*>(&tmp),sizeof(block));
+        if(strcmp(b.elementarray[0].key,key.c_str()) > 0)break;
+        in.seekg(now);
+        in.read(reinterpret_cast<char*>(&b),sizeof(block));
+        if(strcmp(key.c_str(),b.elementarray[0].key) > 0)pre = now;
+        now = next;
+        block tmp1;
+        in.seekg(now);
+        in.read(reinterpret_cast<char*>(&b),sizeof(block));
+        next = tmp1.nxt;
     }
     while(true){
-        block temp4;
-        in.seekg(pre_offset);
-        in.read(reinterpret_cast<char*>(&temp4),sizeof(block));
-        for(int i = 0; i < temp4.num; ++i){
-            if(strcmp(temp4.elementarray[i].key,key.c_str()) == 0){
-                area.push_back(temp4.elementarray[i].offset);
+        out.seekg(pre);
+        block s;
+        out.read(reinterpret_cast<char*>(&s),sizeof(block));
+        for(int i = 0;i < s.num; ++i){
+            if(strcmp(key.c_str(),s.elementarray[i].key) == 0){
+                area.push_back(s.elementarray[i].offset);
             }
         }
-        if(pre_offset == next)break;
-        pre_offset = temp4.nxt;
+        if(pre == next)break;
+        pre = s.nxt;
     }
     in.close();
+    out.close();
 }

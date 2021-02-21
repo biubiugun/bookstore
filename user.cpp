@@ -333,12 +333,12 @@ void modifyisbn(const string& new_isbn){
     if(the_users.top().priority < 3)throw("error");
     book tmp(read<book>(bookfile,the_users.top().select_book));
     vector<int>psb;
-    isbnlist.findElement(tmp.isbn,psb);
+    isbnlist.findElement(new_isbn,psb);
     if(!psb.empty()){
-        element a(tmp.isbn,the_users.top().select_book);
-        isbnlist.deleteElement(a);
-//        throw("error");
+        throw("error");
     }
+    element s(tmp.isbn,the_users.top().select_book);
+    isbnlist.deleteElement(s);
     element a(new_isbn,the_users.top().select_book);
     isbnlist.addElement(a);
     strcpy(tmp.isbn,new_isbn.c_str());
@@ -439,7 +439,7 @@ void show_finance(){
     in.seekg(0);
     finance tmp;
     in.read(reinterpret_cast<char*>(&tmp),sizeof(finance));
-    printf("%s"," + ");
+    printf("%s","+ ");
     printf("%.2lf%s",tmp.benefit," ");
     printf("%s","- ");
     printf("%.2lf%s",tmp.cost,"\n");
@@ -468,7 +468,7 @@ void show_finance(int times){
             output += j.sum;
         }
     }
-    printf("%s%.2lf%s"," + ",input," ");
+    printf("%s%.2lf%s","+ ",input," ");
     printf("%s%.2lf\n","- ",fabs(output));
 }
 
