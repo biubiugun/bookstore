@@ -709,6 +709,8 @@ void run_program(string &line){
         exit(0);
     }else if(op == "clear"){
         clear();
+    }else if(op.empty()){
+        return;
     }else throw ("error");
 }
 
