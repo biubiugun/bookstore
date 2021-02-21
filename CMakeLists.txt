@@ -9,4 +9,4 @@ include_directories(
 
 )
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
-add_executable(code main.cpp Storerecord.cpp Storerecord.h unrolledlist.cpp unrolledlist.h "user.cpp" "user.h")
+add_executable(code main.cpp Storerecord.cpp Storerecord.h unrolledlist.cpp unrolledlist.h user.cpp user.h)

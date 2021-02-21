@@ -331,13 +331,14 @@ void modifykeyword(const string& new_keyword){
 
 void modifyisbn(const string& new_isbn){
     if(the_users.top().priority < 3)throw("error");
+
     book tmp(read<book>(bookfile,the_users.top().select_book));
     vector<int>psb;
     isbnlist.findElement(tmp.isbn,psb);
     if(!psb.empty()){
-//        element a(tmp.isbn,the_users.top().select_book);
-//        isbnlist.deleteElement(a);
-        throw("error");
+        element a(tmp.isbn,the_users.top().select_book);
+        isbnlist.deleteElement(a);
+//        throw("error");
     }
     element a(new_isbn,the_users.top().select_book);
     isbnlist.addElement(a);
