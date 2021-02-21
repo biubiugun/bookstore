@@ -316,6 +316,11 @@ void modifykeyword(const string& new_keyword){
             keywordlist.deleteElement(a);
         }
     }
+    for(int i = 0; i < newkeys.size(); ++i){
+        for(int j = i + 1; j < newkeys.size(); ++j){
+            if(strcmp(newkeys[i].c_str(),newkeys[j].c_str()) == 0)throw ("error");
+        }
+    }
     for(auto &i : newkeys){
         element a(i,the_users.top().select_book);
         keywordlist.addElement(a);
