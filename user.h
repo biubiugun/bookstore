@@ -1,6 +1,7 @@
 #ifndef MAIN_CPP_USER_H
 #define MAIN_CPP_USER_H
 #include "unrolledlist.h"
+#include "Storerecord.h"
 #include <cstring>
 #define bookfile "book.dat"
 #define financefile "finance.dat"
@@ -84,6 +85,8 @@ void clear();
 void get_keyword(const string &line,vector<string>&keywords);
 
 void initialize();
+
+bool check(const string &key,const string &obj);
 
 template<class T>
 T read(const string &file,int offset = 0){

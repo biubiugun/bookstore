@@ -160,6 +160,11 @@ void deleteuser(string &id){
     if(the_users.top().priority < 7)throw("error");
     vector<int>psb;
     if(id == "root")throw ("how you dare");
+    stack<user>temp = the_users;
+    while(!temp.empty()){
+        if(temp.top().userid == id)throw("error");
+        temp.pop();
+    }
     useridlist.findElement(id,psb);
     if(psb.empty() || psb[0] == -1)throw("error");
     user tmp(read<user>(USER,psb[0]));
@@ -499,6 +504,18 @@ void show_finance(int times){
 //    }
 //}
 
+bool check(const string &obj,const string &key){
+    vector<string>k;
+    get_keyword(obj,k);
+    bool flag = false;
+    for(auto & it : k){
+        if(it == key){
+            flag = true;
+            break;
+        }
+    }
+    return flag;
+}
 
 void show(const string &key,unrolledlist &list){
     if(the_users.empty())throw("error");
@@ -513,8 +530,35 @@ void show(const string &key,unrolledlist &list){
             string isbn = tmp.isbn;
             store.insert(make_pair(isbn,tmp));
         }
-        for(auto &i : store){
-            i.second.showlist();
+        if(&list == &keywordlist){
+            for(auto & it : store) {
+                if (check(it.second.keyword, key))it.second.showlist();
+                else continue;
+            }
+            return;
+        }
+        if(&list == &authorlist){
+            for(auto & it : store) {
+                if (check(it.second.author, key))it.second.showlist();
+                else continue;
+            }
+            return;
+        }
+        if(&list == &namelist){
+            for(auto & it : store) {
+                if (check(it.second.name, key))it.second.showlist();
+                else continue;
+            }
+            return;
+        }
+        for(auto & it : store){
+//            vector<string>p;
+//            string a = it.second.keyword;
+//            get_keyword(a,p);
+//            for(auto &o : p){
+//                cout << o << endl;
+//            }
+            it.second.showlist();
         }
     }
 }
@@ -563,6 +607,7 @@ void run_program(string &line){
         stringstream ss;
         ss << pri;
         ss >> priority;
+        if(!ss)throw("error");
         if(checkuserid(user_id) && checkpassword(password) && !password.empty() && checkname(name)){
             user tmp(password,user_id,name,priority);
             useradd(tmp);
@@ -648,9 +693,11 @@ void run_program(string &line){
         stringstream ss(t1);
         ss << t1;
         ss >> quantity;
+        if(!ss)throw("Error");
         stringstream st(t2);
         st << t2;
         st >> cost_price;
+        if(!ss)throw("error");
         import(quantity,cost_price);
     }else if(op == "show"){
         if(the_users.empty())throw("error");
