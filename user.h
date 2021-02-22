@@ -86,7 +86,7 @@ void get_keyword(const string &line,vector<string>&keywords);
 void initialize();
 
 template<class T>
-T read(const string &file,int offset){
+T read(const string &file,int offset = 0){
     fstream in;
     in.open(file,ios::in | ios::binary);
     if(!in)throw("error");

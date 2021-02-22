@@ -289,17 +289,21 @@ void modifyauthor(const string& new_author){
 }
 
 void get_keyword(const string &line,vector<string>&keywords){
-    int i = 0;
-    while(i < line.length()){
-        if(line[i] == '|'){i++;continue;}
-        int j;
-        string tmp;
-        for(j = i;j < line.length() && line[j] != '|'; ++j){
-            tmp[j - i] = line[j];
+    string s;
+    for (auto i : line) {
+        if (i=='|') {
+            for (const auto& it : keywords) {
+                if (strcmp(it.c_str(),s.c_str()) == 0) throw 1;
+            }
+            keywords.push_back(s);
+            s="";
         }
-        keywords.push_back(tmp);
-        i = j;
+        else s+=i;
     }
+    for (const auto& it : keywords) {
+        if (strcmp(it.c_str(),s.c_str()) == 0) throw 1;
+    }
+    keywords.push_back(s);
 }
 
 
